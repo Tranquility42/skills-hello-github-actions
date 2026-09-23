@@ -5,30 +5,27 @@ on:
 permissions:
   pull-requests: write
 jobs:
-  welcome:
-    name: Post welcome comment
+  test:
     runs-on: ubuntu-latest
     steps:
-      - run: gh pr comment "$PR_URL" --body "Welcome to the repository!"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PR_URL: ${{ github.event.pull_request.html_url }}
-  test:
-    name: test le trigger
-    runs-on: ubuntu-latest
-    steps: 
-    - name: je dois voir ca
-      run: |
-        echo "voila on premier job Mahmoud :rocket:" >> $GITHUB_STEP_SUMMARY
-        touch ce_fichier_est_creer.md .github/workflows/
+      - run: |
+          touch ce_fichier_est_creer.md
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mon-fichier
+          path: ce_fichier_est_creer.md
+
   supprimer:
     needs: test
-    name: supprime test
     runs-on: ubuntu-latest
     steps:
-      - name: supprimer le fichier ajouté
-        run: | 
-          rm ./github/workflows/ce_fichier_est_creer.md
-          echo "fichier supprimer avec succes :rocket:"
+      - uses: actions/download-artifact@v4
+        with:
+          name: mon-fichier
+
+      - run: |
+          rm ce_fichier_est_creer.md
+          echo "fichier supprimé avec succès 🚀"
     
     
