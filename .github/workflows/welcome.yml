@@ -13,3 +13,22 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_URL: ${{ github.event.pull_request.html_url }}
+  test:
+    name: test le trigger
+    runs-on: ubuntu-latest
+    steps: 
+    - name: je dois voir ca
+      run: |
+        echo "voila on premier job Mahmoud :rocket:" >> $GITHUB_STEP_SUMMARY
+        touch ce_fichier_est_creer.md ./github/workflows/
+  supprimer:
+    needs: test
+    name: supprime test
+    runs-on: ubuntu-latest
+    steps:
+      - name: supprimer le fichier ajouté
+        run: | 
+          rm ./github/workflows/ce_fichier_est_creer.md
+          echo "fichier supprimer avec succes :rocket:"
+    
+    
