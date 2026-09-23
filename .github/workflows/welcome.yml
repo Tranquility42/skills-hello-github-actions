@@ -1,0 +1,31 @@
+name: Post welcome comment
+on:
+  pull_request:
+    types: [opened]
+permissions:
+  pull-requests: write
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          touch ce_fichier_est_creer.md
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mon-fichier
+          path: ce_fichier_est_creer.md
+
+  supprimer:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: mon-fichier
+
+      - run: |
+          rm ce_fichier_est_creer.md
+          echo "fichier supprimé avec succès 🚀"
+    
+    
