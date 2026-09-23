@@ -20,7 +20,7 @@ jobs:
     - name: je dois voir ca
       run: |
         echo "voila on premier job Mahmoud :rocket:" >> $GITHUB_STEP_SUMMARY
-        touch ce_fichier_est_creer.md ./github/workflows/
+        touch ce_fichier_est_creer.md .github/workflows/
   supprimer:
     needs: test
     name: supprime test
